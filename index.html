@@ -3,100 +3,101 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="#101827" />
+  <meta name="theme-color" content="#e6f4f1" />
   <title>Meal Flow</title>
   <link rel="manifest" href="manifest.json" />
   <link rel="apple-touch-icon" href="icons/icon-192.png" />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <main class="app">
-    <section class="hero-card">
-      <div class="top-row">
+  <main class="app-shell">
+    <nav class="side-nav" aria-label="Main navigation">
+      <button class="nav-item is-active" type="button"><span class="nav-icon">⏱</span><span>Timer</span></button>
+      <button class="nav-item" type="button"><span class="nav-icon">◷</span><span>History</span></button>
+      <button class="nav-item" type="button"><span class="nav-icon">☘</span><span>Nutrition</span></button>
+      <button class="nav-item" type="button"><span class="nav-icon">☻</span><span>Profile</span></button>
+      <button class="nav-item nav-bottom" id="openSettingsMobile" type="button"><span class="nav-icon">⚙</span><span>Settings</span></button>
+    </nav>
+
+    <section class="timer-panel">
+      <header class="app-header">
         <div>
-          <p class="eyebrow">Meal Flow</p>
-          <h1>Stay on rhythm.</h1>
+          <p class="kicker">Meal Flow</p>
+          <h1 id="greeting">Good morning</h1>
+          <p class="subtitle">Stay focused. Keep your rhythm simple.</p>
         </div>
-        <button class="icon-btn" id="settingsToggle" aria-label="Open settings">
-          ⚙
+        <button class="hydrate-card" type="button" id="hydrateBtn" aria-label="Add water glass">
+          <span class="hydrate-icon">♧</span>
+          <span><strong>Hydrate</strong><small><span id="waterCount">0</span> / 6</small></span>
         </button>
-      </div>
+      </header>
 
-      <div class="status-pill" id="statusPill">Focus window</div>
-
-      <div class="next-block">
+      <section class="next-meal">
         <p class="muted">Next meal</p>
-        <h2 id="nextMealTitle">Lunch at 14:00</h2>
-      </div>
+        <h2 id="nextMealName">Lunch</h2>
+        <p id="nextMealTime">Today at 14:00</p>
+      </section>
 
-      <div class="timer" id="timer">00:00:00</div>
-
-      <p class="hint" id="hint">
-        No random snacks. Water, tea, coffee or vegetables are okay.
-      </p>
-
-      <button class="primary-btn" id="mealDoneBtn">I ate</button>
-
-      <div class="progress-wrap">
-        <div class="progress-bar">
-          <div class="progress-fill" id="progressFill"></div>
+      <section class="timer-card" aria-label="Meal timer">
+        <svg class="progress-ring" viewBox="0 0 260 260" aria-hidden="true">
+          <circle class="ring-bg" cx="130" cy="130" r="112"></circle>
+          <circle class="ring-progress" id="ringProgress" cx="130" cy="130" r="112"></circle>
+        </svg>
+        <div class="timer-content">
+          <p>Time remaining</p>
+          <div class="time" id="countdown">00:00:00</div>
+          <div class="time-labels"><span>HRS</span><span>MIN</span><span>SEC</span></div>
+          <button class="ate-button" id="ateButton" type="button"><span>✓</span>I ate</button>
+          <button class="skip-button" id="skipButton" type="button">Skip meal</button>
         </div>
-        <div class="progress-labels">
-          <span id="currentWindowLabel">Now</span>
-          <span id="nextWindowLabel">Next</span>
-        </div>
-      </div>
-    </section>
+      </section>
 
-    <section class="settings-card hidden" id="settingsPanel">
-      <div class="settings-header">
+      <section class="snack-card">
+        <div class="snack-icon">☘</div>
         <div>
-          <p class="eyebrow">Settings</p>
-          <h3>Your eating schedule</h3>
+          <h3 id="snackTitle">No snacks right now</h3>
+          <p id="snackHint">You can have water, tea or vegetables.</p>
         </div>
-        <button class="ghost-btn" id="resetBtn">Reset</button>
-      </div>
-
-      <div class="settings-grid">
-        <label>
-          Breakfast
-          <input type="time" id="breakfastTime" />
-        </label>
-
-        <label>
-          Lunch
-          <input type="time" id="lunchTime" />
-        </label>
-
-        <label>
-          Dinner
-          <input type="time" id="dinnerTime" />
-        </label>
-
-        <label>
-          Snack window
-          <select id="snackMode">
-            <option value="none">No snacks</option>
-            <option value="vegetables">Vegetables only</option>
-            <option value="custom">Custom snack time</option>
-          </select>
-        </label>
-
-        <label class="custom-snack-row" id="customSnackRow">
-          Snack time
-          <input type="time" id="snackTime" />
-        </label>
-      </div>
-
-      <button class="primary-btn save-btn" id="saveBtn">Save schedule</button>
+        <div class="snack-illustration" aria-hidden="true">🥒🍅🫑</div>
+      </section>
     </section>
+
+    <aside class="settings-panel" id="settingsPanel">
+      <div class="panel-header">
+        <h2>Schedule</h2>
+        <button class="text-button" id="addMealBtn" type="button">+ Add meal</button>
+      </div>
+      <div class="meal-list" id="mealList"></div>
+      <div class="divider"></div>
+
+      <section class="setting-section">
+        <h3>Snack mode</h3>
+        <label class="option-card"><input type="radio" name="snackMode" value="none" /><span class="option-icon">⊘</span><span>No snacks</span><span class="radio-dot"></span></label>
+        <label class="option-card"><input type="radio" name="snackMode" value="vegetables" /><span class="option-icon">☘</span><span>Vegetables only</span><span class="radio-dot"></span></label>
+        <label class="option-card"><input type="radio" name="snackMode" value="custom" /><span class="option-icon">⏰</span><span>Custom snack time</span><span class="radio-dot"></span></label>
+        <label class="time-field" id="customSnackField">Snack time<input type="time" id="snackTimeInput" /></label>
+      </section>
+
+      <div class="divider"></div>
+      <section class="setting-section compact">
+        <label class="toggle-row"><span class="toggle-icon">🔔</span><span><strong>Reminders</strong><small>Browser notifications before meals</small></span><input type="checkbox" id="remindersToggle" /></label>
+        <label class="toggle-row"><span class="toggle-icon">🔈</span><span><strong>Sound</strong><small>Soft sound on notifications</small></span><input type="checkbox" id="soundToggle" /></label>
+      </section>
+    </aside>
   </main>
 
+  <template id="mealItemTemplate">
+    <article class="meal-item">
+      <div class="meal-badge"></div>
+      <div class="meal-main">
+        <input class="meal-name-input" type="text" aria-label="Meal name" />
+        <input class="meal-time-input" type="time" aria-label="Meal time" />
+      </div>
+      <button class="meal-remove" type="button" aria-label="Remove meal">×</button>
+    </article>
+  </template>
+
   <script src="app.js"></script>
-  <script>
-    if ("serviceWorker" in navigator) {
-      navigator.serviceWorker.register("service-worker.js");
-    }
-  </script>
+  <script>if ("serviceWorker" in navigator) navigator.serviceWorker.register("service-worker.js");</script>
 </body>
 </html>
