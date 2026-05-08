@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#101827" />
+  <title>Meal Flow</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="app">
+    <section class="hero-card">
+      <div class="top-row">
+        <div>
+          <p class="eyebrow">Meal Flow</p>
+          <h1>Stay on rhythm.</h1>
+        </div>
+        <button class="icon-btn" id="settingsToggle" aria-label="Open settings">
+          ⚙
+        </button>
+      </div>
+
+      <div class="status-pill" id="statusPill">Focus window</div>
+
+      <div class="next-block">
+        <p class="muted">Next meal</p>
+        <h2 id="nextMealTitle">Lunch at 14:00</h2>
+      </div>
+
+      <div class="timer" id="timer">00:00:00</div>
+
+      <p class="hint" id="hint">
+        No random snacks. Water, tea, coffee or vegetables are okay.
+      </p>
+
+      <button class="primary-btn" id="mealDoneBtn">I ate</button>
+
+      <div class="progress-wrap">
+        <div class="progress-bar">
+          <div class="progress-fill" id="progressFill"></div>
+        </div>
+        <div class="progress-labels">
+          <span id="currentWindowLabel">Now</span>
+          <span id="nextWindowLabel">Next</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="settings-card hidden" id="settingsPanel">
+      <div class="settings-header">
+        <div>
+          <p class="eyebrow">Settings</p>
+          <h3>Your eating schedule</h3>
+        </div>
+        <button class="ghost-btn" id="resetBtn">Reset</button>
+      </div>
+
+      <div class="settings-grid">
+        <label>
+          Breakfast
+          <input type="time" id="breakfastTime" />
+        </label>
+
+        <label>
+          Lunch
+          <input type="time" id="lunchTime" />
+        </label>
+
+        <label>
+          Dinner
+          <input type="time" id="dinnerTime" />
+        </label>
+
+        <label>
+          Snack window
+          <select id="snackMode">
+            <option value="none">No snacks</option>
+            <option value="vegetables">Vegetables only</option>
+            <option value="custom">Custom snack time</option>
+          </select>
+        </label>
+
+        <label class="custom-snack-row" id="customSnackRow">
+          Snack time
+          <input type="time" id="snackTime" />
+        </label>
+      </div>
+
+      <button class="primary-btn save-btn" id="saveBtn">Save schedule</button>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
